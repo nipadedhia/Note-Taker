@@ -36,3 +36,16 @@ app.post("/api/notes", function (req, res) {
   writeData();
   return res.json(data);
 });
+
+// DELETE Request
+app.delete("/api/notes/:id", function (req, res) {
+  const id = req.params.id;
+  data = data.filter(function (note) {
+    if (note.id === id) {
+      return false;
+    }
+    return true;
+  });
+  writeData();
+  return res.json(data);
+});

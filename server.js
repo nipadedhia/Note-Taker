@@ -14,16 +14,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Html Routes
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+// If no matching route is found default to home page.
+app.get("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
-app.get("/notes", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "notes.html"));
+app.get("/notes", function (req, res) {
+  res.sendFile(path.join(__dirname, "../public/notes.html"));
 });
 
-// Set static folder to get css and js files
-app.use(express.static(path.join(__dirname, "public")));
+// Link to css file.
+app.get("/styles", function (req, res) {
+  res.sendFile(path.join(__dirname, "../public/css/styles.css"));
+});
 
 //  GET Request
 app.get("/api/notes", function (req, res) {
@@ -49,3 +52,11 @@ app.delete("/api/notes/:id", function (req, res) {
   writeData();
   return res.json(data);
 });
+
+// Write data
+const writeData = function () {
+  fs.writeFile("./db/db.json", JSON.stringify(data), (err) => {
+    if (err) throw err;
+  });
+};
+let data = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));

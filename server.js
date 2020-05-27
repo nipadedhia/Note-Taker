@@ -26,9 +26,13 @@ app.get("/notes", (req, res) => {
 app.use(express.static(path.join(__dirname, "public")));
 
 //  GET Request
-app.get("/api/notes", (req, res) => {
-  fs.readFile("db/db.json", "utf8", function (err, data) {
-    var notes = JSON.parse(data);
-    res.send(notes);
-  });
+app.get("/api/notes", function (req, res) {
+  return res.json(data);
+});
+
+// POST Request
+app.post("/api/notes", function (req, res) {
+  data.push(req.body);
+  writeData();
+  return res.json(data);
 });

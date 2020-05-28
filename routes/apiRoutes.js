@@ -1,6 +1,5 @@
 // Required Modules
 const fs = require("fs");
-const notesData = require("../db/db.json");
 
 // Routing
 module.exports = function (app) {
@@ -36,4 +35,5 @@ module.exports = function (app) {
     });
   };
   let data = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+  console.log(data);
 };

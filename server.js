@@ -4,7 +4,7 @@ const path = require("path");
 const fs = require("fs");
 
 // Create an express server.
-const app = express();
+let app = express();
 
 // Sets an initial port. this later will be use in listener
 const PORT = process.env.PORT || 8080;

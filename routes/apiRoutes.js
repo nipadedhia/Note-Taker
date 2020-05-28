@@ -3,6 +3,15 @@ const fs = require("fs");
 
 // Routing
 module.exports = function (app) {
+  // Write data
+  const writeData = function () {
+    fs.writeFile("./db/db.json", JSON.stringify(data), (err) => {
+      if (err) throw err;
+    });
+  };
+  let data = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+  console.log(data);
+
   //  GET Request
   app.get("/api/notes", function (req, res) {
     return res.json(data);
@@ -27,13 +36,4 @@ module.exports = function (app) {
     writeData();
     return res.json(data);
   });
-
-  // Write data
-  const writeData = function () {
-    fs.writeFile("./db/db.json", JSON.stringify(data), (err) => {
-      if (err) throw err;
-    });
-  };
-  let data = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
-  console.log(data);
 };

@@ -28,12 +28,13 @@ module.exports = function (app) {
   // DELETE Request
   app.delete("/api/notes/:id", function (req, res) {
     const id = req.params.id;
-    data = data.filter(function (note) {
-      if (note.id === id) {
-        return false;
-      }
-      return true;
-    });
+    // data = data.filter(function (note) {
+    //   if (note.id === id) {
+    //     return false;
+    //   }
+    //   return true;
+    // });
+    data = data.filter((note) => note.id !== id);
     writeData();
     return res.json(data);
   });

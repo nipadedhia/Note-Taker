@@ -10,7 +10,7 @@ module.exports = function (app) {
       if (err) throw err;
     });
   };
-  let data = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+  let data = JSON.parse(fs.readFileSync("./db/db.json", "utf-8"));
   console.log(data);
 
   //  GET Request
@@ -20,21 +20,27 @@ module.exports = function (app) {
 
   // POST Request
   app.post("/api/notes", function (req, res) {
-    data.push(req.body);
+    let newnote = { ...req.body };
+    newnote.id = data.length + 1;
+    data.push(newnote);
     writeData();
-    return res.json(data);
+    return res.json(newnote);
   });
 
   // DELETE Request
   app.delete("/api/notes/:id", function (req, res) {
     const id = req.params.id;
-    // data = data.filter(function (note) {
-    //   if (note.id === id) {
-    //     return false;
-    //   }
-    //   return true;
+    let filter = [];
+    data.forEach((element) => {
+      if (element.id !== id) {
+        filter.push(element);
+      }
+    });
+    data = filter;
+    // data = data.filter((note) => {
+    //   return note.id !== id;
     // });
-    data = data.filter((note) => note.id !== id);
+    console.log(data);
     writeData();
     return res.json(data);
   });

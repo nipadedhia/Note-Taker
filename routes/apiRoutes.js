@@ -29,18 +29,11 @@ module.exports = function (app) {
 
   // DELETE Request
   app.delete("/api/notes/:id", function (req, res) {
-    const id = req.params.id;
+    const id = parseInt(req.params.id);
     let filter = [];
-    data.forEach((element) => {
-      if (element.id !== id) {
-        filter.push(element);
-      }
-    });
+
+    filter = data.filter((note) => note.id !== id);
     data = filter;
-    // data = data.filter((note) => {
-    //   return note.id !== id;
-    // });
-    console.log(data);
     writeData();
     return res.json(data);
   });
